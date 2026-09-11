@@ -1,7 +1,7 @@
 # Record layout of the Novo CAGED microdata
 
 The columns of the monthly files, with the original (accented) name used
-by the Ministry, the normalised name returned by
+by the Ministry, the normalized name returned by
 [`caged_read()`](https://strategicprojects.github.io/cagedr/reference/caged_read.md),
 the type assigned when `types = TRUE`, the files in which the column
 appears and a short description. The official layout (the "Layout
@@ -16,7 +16,7 @@ caged_layout()
 
 ## Value
 
-A tibble with columns `column` (normalised name), `original` (name in
+A tibble with columns `column` (normalized name), `original` (name in
 the file), `type`, `files` and `description`.
 
 ## Details

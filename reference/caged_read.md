@@ -36,7 +36,7 @@ caged_read(
 
 - columns:
 
-  Optional character vector of columns to keep, using the normalised
+  Optional character vector of columns to keep, using the normalized
   names listed by
   [`caged_layout()`](https://strategicprojects.github.io/cagedr/reference/caged_layout.md).
   `NULL` keeps all columns. The `uf` column is always read (it is needed
@@ -64,7 +64,7 @@ A tibble with the selected records and columns, plus two columns added
 by the package: `caged_file` (`"MOV"`, `"FOR"` or `"EXC"`, detected from
 the archive name) and `caged_period` (the reference month of the
 **archive**, which for `FOR` and `EXC` differs from the `competenciamov`
-of the records). Column names are normalised: accents removed and lower
+of the records). Column names are normalized: accents removed and lower
 case (`competenciamov`, `municipio`, `salario`). Returns an empty tibble
 when no record matches.
 

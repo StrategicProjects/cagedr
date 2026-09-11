@@ -102,7 +102,7 @@ and Paraiba). <code>NULL</code> keeps every state.</p></dd>
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a></dt>
 <dd><p>Optional character vector of columns to keep, using the
-normalised names listed by <code><a href="caged_layout.html">caged_layout()</a></code>. <code>NULL</code> keeps all columns.
+normalized names listed by <code><a href="caged_layout.html">caged_layout()</a></code>. <code>NULL</code> keeps all columns.
 The <code>uf</code> column is always read (it is needed for filtering) but is only
 returned when requested or when <code>columns</code> is <code>NULL</code>.</p></dd>
 
@@ -129,7 +129,7 @@ faster but use more memory; the default (500,000 lines) uses well under
 added by the package: <code>caged_file</code> (<code>"MOV"</code>, <code>"FOR"</code> or <code>"EXC"</code>,
 detected from the archive name) and <code>caged_period</code> (the reference month
 of the <strong>archive</strong>, which for <code>FOR</code> and <code>EXC</code> differs from the
-<code>competenciamov</code> of the records). Column names are normalised: accents
+<code>competenciamov</code> of the records). Column names are normalized: accents
 removed and lower case (<code>competenciamov</code>, <code>municipio</code>, <code>salario</code>).
 Returns an empty tibble when no record matches.</p>
     </div>

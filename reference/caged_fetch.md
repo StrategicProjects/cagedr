@@ -45,7 +45,7 @@ caged_fetch(
 
 - columns:
 
-  Optional character vector of columns to keep, using the normalised
+  Optional character vector of columns to keep, using the normalized
   names listed by
   [`caged_layout()`](https://strategicprojects.github.io/cagedr/reference/caged_layout.md).
   `NULL` keeps all columns. The `uf` column is always read (it is needed

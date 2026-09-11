@@ -82,7 +82,7 @@ x
 #> #   indicadoraprendiz <int>, origemdainformacao <int>, competenciadec <int>, …
 ```
 
-Column names come back normalised (accents removed, lower case), the
+Column names come back normalized (accents removed, lower case), the
 codes are integers and the salary is a number. Two columns are added by
 the package: `caged_file` tells which of the three files the record came
 from and `caged_period` is the reference month of the *archive*.
@@ -192,4 +192,4 @@ caged_cache_list()
 See
 [`vignette("streaming-and-cache")`](https://strategicprojects.github.io/cagedr/articles/streaming-and-cache.md)
 for the details of how files are read and cached, and for the vintage
-behaviour of the `FOR` and `EXC` files.
+behavior of the `FOR` and `EXC` files.
