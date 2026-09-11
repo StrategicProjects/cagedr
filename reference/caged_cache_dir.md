@@ -41,7 +41,7 @@ for repeated work.
 
 ``` r
 caged_cache_dir()
-#> [1] "/tmp/RtmpcLLuS3/cagedr-cache"
+#> [1] "/tmp/RtmpQtVEGr/cagedr-cache"
 if (FALSE) { # \dontrun{
 # Persistent cache for every session:
 Sys.setenv(CAGEDR_CACHE_DIR = "~/dados/caged")
