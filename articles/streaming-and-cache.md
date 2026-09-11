@@ -1,0 +1,139 @@
+# Streaming, cache and data vintages
+
+## How an archive is read
+
+A national `CAGEDMOV` archive expands to roughly 600 MB of text. Reading
+it the usual way (extract, then `read.csv`) needs that much disk and a
+multiple of it in memory.
+[`caged_read()`](https://strategicprojects.github.io/cagedr/reference/caged_read.md)
+avoids both:
+
+1.  [`archive::archive_read()`](https://archive.r-lib.org/reference/archive_read.html)
+    opens a connection that **decompresses the `.txt` on the fly**, so
+    nothing is written to disk;
+2.  [`readr::read_delim_chunked()`](https://readr.tidyverse.org/reference/read_delim_chunked.html)
+    parses the connection in **chunks** (500,000 lines by default);
+3.  a callback **filters each chunk by `uf`** and keeps only the
+    requested columns before the chunk is stored.
+
+Peak memory is therefore one chunk of the national file plus the rows
+you keep. Reading Pernambuco (about 110,000 records) out of a
+4.5-million-record month takes 20 to 30 seconds on a laptop and stays
+well under 1 GB.
+
+``` r
+
+library(cagedr)
+f <- system.file("extdata", "CAGEDMOV202301_sample.7z", package = "cagedr")
+
+# Smaller chunks use less memory; the result is identical.
+a <- caged_read(f, chunk_size = 5, verbose = FALSE)
+b <- caged_read(f, verbose = FALSE)
+identical(a, b)
+#> [1] TRUE
+```
+
+If you need the whole country, call
+[`caged_read()`](https://strategicprojects.github.io/cagedr/reference/caged_read.md)
+without `uf`. It still streams, but you will hold every record in memory
+at the end, so select columns.
+
+## Types
+
+All fields are parsed as text and only then converted, which keeps a
+malformed value from aborting the whole read. Codes become integers;
+`salario` and `valorsalariofixo`, written with a decimal comma in the
+files, become doubles. Pass `types = FALSE` to keep everything as
+character, for example to inspect raw values.
+
+``` r
+
+str(caged_read(f, types = FALSE, columns = c("salario", "idade"), verbose = FALSE))
+#> tibble [32 × 4] (S3: tbl_df/tbl/data.frame)
+#>  $ salario     : chr [1:32] "1414,99" "651,00" "1302,00" "1407,26" ...
+#>  $ idade       : chr [1:32] "32" "19" "29" "50" ...
+#>  $ caged_file  : chr [1:32] "MOV" "MOV" "MOV" "MOV" ...
+#>  $ caged_period: int [1:32] 202301 202301 202301 202301 202301 202301 202301 202301 202301 202301 ...
+```
+
+## Cache
+
+[`caged_download()`](https://strategicprojects.github.io/cagedr/reference/caged_download.md)
+stores the archives in the directory returned by
+[`caged_cache_dir()`](https://strategicprojects.github.io/cagedr/reference/caged_cache_dir.md),
+named exactly as on the server (`CAGEDMOV202607.7z`). A file already in
+the cache is not downloaded again, so a monthly update costs one new
+month, not the whole series.
+
+The location is resolved in this order:
+
+1.  the `cache_dir` argument;
+2.  the `CAGEDR_CACHE_DIR` environment variable;
+3.  the `cagedr.cache_dir` option;
+4.  `file.path(tempdir(), "cagedr-cache")`, removed when R exits.
+
+The default follows the CRAN policy of not writing outside the temporary
+directory unless the user opts in. To keep the archives between
+sessions, set the environment variable in your `.Renviron`:
+
+    CAGEDR_CACHE_DIR=~/dados/caged
+
+[`caged_cache_list()`](https://strategicprojects.github.io/cagedr/reference/caged_cache_list.md)
+shows what is stored and
+[`caged_cache_clear()`](https://strategicprojects.github.io/cagedr/reference/caged_cache_clear.md)
+removes all or some months.
+
+``` r
+
+caged_cache_list()
+#> # A tibble: 0 × 5
+#> # ℹ 5 variables: path <chr>, period <int>, file <chr>, size_bytes <dbl>,
+#> #   modified <dttm>
+```
+
+## Vintages: why old months keep changing
+
+The `FOR` (late declarations) and `EXC` (exclusions) archives of month
+*M* contain records whose `competenciamov` is **earlier** than *M*: an
+employer that declares a January admission in April produces a record in
+`CAGEDFOR202604` with `competenciamov = 202601`. The Ministry’s
+published balance for January is therefore revised every month, and to
+reproduce it you must read every archive published up to the date you
+want to mimic.
+
+Two practical consequences:
+
+- Aggregate by `competenciamov`, never by `caged_period`.
+  [`caged_balance()`](https://strategicprojects.github.io/cagedr/reference/caged_balance.md)
+  does this.
+- A pipeline that keeps a consolidated table should **recompute** it
+  from all archives after each monthly download, rather than appending
+  the new month.
+
+``` r
+
+exc <- caged_read(system.file("extdata", "CAGEDEXC202301_sample.7z", package = "cagedr"),
+                  verbose = FALSE)
+# Exclusion records point to the month they cancel, not to the archive month
+table(archive = exc$caged_period, movement = exc$competenciamov)
+#>         movement
+#> archive  202108 202201 202208 202211
+#>   202301      2      1      1      3
+```
+
+The Ministry also re-publishes whole months from time to time (the
+folders of several months share the same modification date on the server
+after such an event).
+[`caged_available()`](https://strategicprojects.github.io/cagedr/reference/caged_available.md)
+returns that date; if it moved for a month you already have, delete it
+with `caged_cache_clear(period)` and download again.
+
+## The first months of the series
+
+`CAGEDFOR202001.7z`, `CAGEDEXC202001.7z`, `CAGEDEXC202002.7z` and
+`CAGEDEXC202003.7z` do not exist on the server, because there was
+nothing to declare late or to cancel yet.
+[`caged_download()`](https://strategicprojects.github.io/cagedr/reference/caged_download.md)
+reports them with `status = "not_found"` and
+[`caged_fetch()`](https://strategicprojects.github.io/cagedr/reference/caged_fetch.md)
+skips them silently.
