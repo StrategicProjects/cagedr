@@ -1,0 +1,62 @@
+url: https://strategicprojects.github.io/cagedr/
+
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+  bslib:
+    primary: "#1f4e79"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
+  includes:
+    in_header: pkgdown/extra.css
+
+home:
+  title: "cagedr: Novo CAGED microdata from R"
+  description: >
+    List, download and stream-read the monthly Novo CAGED microdata of the
+    Brazilian Ministry of Labour and Employment, filtering by state before
+    anything is kept in memory.
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    articles:
+      text: Articles
+      menu:
+        - text: Getting started
+          href: articles/getting-started.html
+        - text: Streaming, cache and data vintages
+          href: articles/streaming-and-cache.html
+
+reference:
+  - title: "Server"
+    desc: "What is published and when."
+    contents:
+      - caged_available
+      - caged_periods
+
+  - title: "Download and cache"
+    contents:
+      - caged_download
+      - caged_cache_dir
+      - caged_cache_list
+      - caged_cache_clear
+
+  - title: "Read"
+    desc: "Stream-read the national archives, filtering by state."
+    contents:
+      - caged_read
+      - caged_fetch
+
+  - title: "Consolidate and document"
+    contents:
+      - caged_balance
+      - caged_layout
+      - cagedr-package
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with

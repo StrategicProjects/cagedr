@@ -1,0 +1,142 @@
+---
+title: "Getting started with cagedr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with cagedr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## What the Novo CAGED is
+
+The CAGED (*Cadastro Geral de Empregados e Desempregados*) is the monthly
+registry of admissions and separations of formal workers in Brazil, published
+by the Ministry of Labour and Employment. Since January 2020 the series is the
+**Novo CAGED**, built from eSocial declarations, and its public, non-identified
+microdata are published on the PDET FTP server, one folder per reference
+month:
+
+```
+ftp://ftp.mtps.gov.br/pdet/microdados/NOVO CAGED/<AAAA>/<AAAAMM>/
+    CAGEDMOV<AAAAMM>.7z   movements declared on time
+    CAGEDFOR<AAAAMM>.7z   movements declared late (earlier reference months)
+    CAGEDEXC<AAAAMM>.7z   exclusions (cancelled movements)
+```
+
+Each file is **national**: about 55 MB compressed, 600 MB of text and 4 to 5
+million records for the `MOV` file. The Ministry publishes a month around the
+end of the following month and occasionally re-publishes earlier months.
+
+`cagedr` does three things with these files:
+
+1. **lists** the reference months available on the server;
+2. **downloads** them into an idempotent local cache;
+3. **reads** them as a stream, filtering by state and selecting columns
+   *before* anything is kept in memory.
+
+The third point is what makes the package useful on an ordinary laptop: one
+state is typically 2 to 3 % of the national file, and you never hold the
+other 97 % in memory.
+
+## Installation
+
+```{r, eval = FALSE}
+# From CRAN (when available):
+install.packages("cagedr")
+
+# Development version:
+# remotes::install_github("StrategicProjects/cagedr")
+```
+
+The package reads `.7z` archives through the `archive` package, which needs
+`libarchive`. It is bundled on Windows and macOS binaries; on Linux install
+`libarchive-dev` (Debian/Ubuntu) or `libarchive-devel` (Fedora) first.
+
+## A sample archive ships with the package
+
+Every function that reads data can be tried offline with the small archives
+in `inst/extdata`, which keep the exact layout of the Ministry's files
+(accented header, `;` separator, decimal comma) for a handful of records from
+Pernambuco and Bahia.
+
+```{r}
+library(cagedr)
+
+f <- system.file("extdata", "CAGEDMOV202301_sample.7z", package = "cagedr")
+x <- caged_read(f, verbose = FALSE)
+x
+```
+
+Column names come back normalised (accents removed, lower case), the codes
+are integers and the salary is a number. Two columns are added by the
+package: `caged_file` tells which of the three files the record came from and
+`caged_period` is the reference month of the *archive*.
+
+```{r}
+caged_layout()[, c("column", "original", "type")]
+```
+
+## Reading one state
+
+Pass the two-digit IBGE code of the state in `uf`, and optionally the columns
+you need. Both filters are applied chunk by chunk while the archive is being
+decompressed.
+
+```{r}
+pe <- caged_read(
+  f,
+  uf = 26,
+  columns = c("competenciamov", "municipio", "secao", "saldomovimentacao", "salario"),
+  verbose = FALSE
+)
+pe
+```
+
+## Admissions, separations and net balance
+
+`saldomovimentacao` is `+1` for an admission and `-1` for a separation.
+Records in the exclusions file cancel a movement declared earlier, so their
+sign is inverted before summing. `caged_balance()` applies that rule and
+aggregates by the reference month of the movement, `competenciamov`, plus any
+grouping columns you ask for:
+
+```{r}
+caged_balance(x, by = "uf")
+```
+
+## Working with the server
+
+The functions below need network access to `ftp.mtps.gov.br` (port 21 and
+the passive-mode data ports). They are not evaluated in this vignette.
+
+```{r, eval = FALSE}
+# Which months are published?
+caged_available(year = 2026)
+
+# Download the three files of one month into the cache
+caged_download(202607)
+
+# Download and read in one go: Pernambuco, three months, three files
+pe <- caged_fetch(caged_periods(202605, 202607), uf = 26)
+
+# Net balance by municipality and reference month
+caged_balance(pe, by = "municipio")
+```
+
+By default the cache lives under `tempdir()` and disappears with the R
+session. For repeated work set a persistent location once:
+
+```{r, eval = FALSE}
+Sys.setenv(CAGEDR_CACHE_DIR = "~/dados/caged")
+caged_cache_list()
+```
+
+See `vignette("streaming-and-cache")` for the details of how files are read
+and cached, and for the vintage behaviour of the `FOR` and `EXC` files.
