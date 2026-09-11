@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 316 366" width="316" height="366"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><defs>
+    <clipPath id="hex">
+      <polygon points="158,4 312,92 312,272 158,360 4,272 4,92"></polygon>
+    </clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#1f4e79"></stop>
+      <stop offset="100%" stop-color="#0b2540"></stop>
+    </linearGradient>
+  </defs><g clip-path="url(#hex)">
+    <rect x="0" y="0" width="316" height="366" fill="url(#bg)"></rect>
+    <!-- bars: admissions (up) and separations (down) around a baseline -->
+    <line x1="60" y1="178" x2="256" y2="178" stroke="#9fc5e8" stroke-width="3" stroke-linecap="round"></line>
+    <g fill="#5cc8a8">
+      <rect x="72" y="118" width="22" height="60" rx="3"></rect>
+      <rect x="112" y="98" width="22" height="80" rx="3"></rect>
+      <rect x="152" y="132" width="22" height="46" rx="3"></rect>
+      <rect x="192" y="86" width="22" height="92" rx="3"></rect>
+      <rect x="232" y="110" width="22" height="68" rx="3"></rect>
+    </g>
+    <g fill="#f28f3b">
+      <rect x="72" y="178" width="22" height="42" rx="3"></rect>
+      <rect x="112" y="178" width="22" height="56" rx="3"></rect>
+      <rect x="152" y="178" width="22" height="68" rx="3"></rect>
+      <rect x="192" y="178" width="22" height="50" rx="3"></rect>
+      <rect x="232" y="178" width="22" height="36" rx="3"></rect>
+    </g>
+    <!-- net balance line -->
+    <polyline points="83,150 123,132 163,168 203,116 243,140" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"></polyline>
+    <g fill="#ffffff">
+      <circle cx="83" cy="150" r="5"></circle><circle cx="123" cy="132" r="5"></circle><circle cx="163" cy="168" r="5"></circle>
+      <circle cx="203" cy="116" r="5"></circle><circle cx="243" cy="140" r="5"></circle>
+    </g>
+  </g><polygon points="158,4 312,92 312,272 158,360 4,272 4,92" fill="none" stroke="#0b2540" stroke-width="6"></polygon><text x="158" y="300" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="54" font-weight="700" fill="#ffffff" letter-spacing="1">cagedr</text><text x="158" y="326" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" fill="#9fc5e8" letter-spacing="2">NOVO CAGED · MTE</text></svg>
