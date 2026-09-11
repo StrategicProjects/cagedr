@@ -1,7 +1,7 @@
 #' Record layout of the Novo CAGED microdata
 #'
 #' The columns of the monthly files, with the original (accented) name used
-#' by the Ministry, the normalised name returned by [caged_read()], the type
+#' by the Ministry, the normalized name returned by [caged_read()], the type
 #' assigned when `types = TRUE`, the files in which the column appears and a
 #' short description. The official layout (the "Layout Nao-identificado Novo
 #' Caged Movimentacao" spreadsheet) is published in the same FTP folder as the data.
@@ -9,7 +9,7 @@
 #' Two columns exist only in the exclusions file (`EXC`): `competenciaexc`
 #' and `indicadordeexclusao`.
 #'
-#' @return A tibble with columns `column` (normalised name), `original`
+#' @return A tibble with columns `column` (normalized name), `original`
 #'   (name in the file), `type`, `files` and `description`.
 #' @export
 #' @examples

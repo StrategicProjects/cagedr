@@ -28,7 +28,7 @@ and Paraiba). \code{NULL} keeps every state.}
 \item{files}{Which files to download: any subset of \code{c("MOV", "FOR", "EXC")}.}
 
 \item{columns}{Optional character vector of columns to keep, using the
-normalised names listed by \code{\link[=caged_layout]{caged_layout()}}. \code{NULL} keeps all columns.
+normalized names listed by \code{\link[=caged_layout]{caged_layout()}}. \code{NULL} keeps all columns.
 The \code{uf} column is always read (it is needed for filtering) but is only
 returned when requested or when \code{columns} is \code{NULL}.}
 

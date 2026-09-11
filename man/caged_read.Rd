@@ -22,7 +22,7 @@ numbers (for example \code{26} for Pernambuco, \code{c(26, 25)} for Pernambuco
 and Paraiba). \code{NULL} keeps every state.}
 
 \item{columns}{Optional character vector of columns to keep, using the
-normalised names listed by \code{\link[=caged_layout]{caged_layout()}}. \code{NULL} keeps all columns.
+normalized names listed by \code{\link[=caged_layout]{caged_layout()}}. \code{NULL} keeps all columns.
 The \code{uf} column is always read (it is needed for filtering) but is only
 returned when requested or when \code{columns} is \code{NULL}.}
 
@@ -41,7 +41,7 @@ A tibble with the selected records and columns, plus two columns
 added by the package: \code{caged_file} (\code{"MOV"}, \code{"FOR"} or \code{"EXC"},
 detected from the archive name) and \code{caged_period} (the reference month
 of the \strong{archive}, which for \code{FOR} and \code{EXC} differs from the
-\code{competenciamov} of the records). Column names are normalised: accents
+\code{competenciamov} of the records). Column names are normalized: accents
 removed and lower case (\code{competenciamov}, \code{municipio}, \code{salario}).
 Returns an empty tibble when no record matches.
 }

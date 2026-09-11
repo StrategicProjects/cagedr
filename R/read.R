@@ -1,5 +1,5 @@
 # Columns typed as integer / double after reading. Everything else stays
-# character. Names are the normalised ones (see .normalise_names()).
+# character. Names are the normalized ones (see .normalize_names()).
 .caged_int_cols <- c(
   "competenciamov", "competenciadec", "competenciaexc", "regiao", "uf",
   "municipio", "saldomovimentacao", "categoria", "graudeinstrucao", "idade",
@@ -27,7 +27,7 @@
 #'   numbers (for example `26` for Pernambuco, `c(26, 25)` for Pernambuco
 #'   and Paraiba). `NULL` keeps every state.
 #' @param columns Optional character vector of columns to keep, using the
-#'   normalised names listed by [caged_layout()]. `NULL` keeps all columns.
+#'   normalized names listed by [caged_layout()]. `NULL` keeps all columns.
 #'   The `uf` column is always read (it is needed for filtering) but is only
 #'   returned when requested or when `columns` is `NULL`.
 #' @param types Convert the numeric columns of the layout (codes, salary) to
@@ -42,7 +42,7 @@
 #'   added by the package: `caged_file` (`"MOV"`, `"FOR"` or `"EXC"`,
 #'   detected from the archive name) and `caged_period` (the reference month
 #'   of the **archive**, which for `FOR` and `EXC` differs from the
-#'   `competenciamov` of the records). Column names are normalised: accents
+#'   `competenciamov` of the records). Column names are normalized: accents
 #'   removed and lower case (`competenciamov`, `municipio`, `salario`).
 #'   Returns an empty tibble when no record matches.
 #' @export
@@ -72,11 +72,11 @@ caged_read <- function(path, uf = NULL, columns = NULL, types = TRUE,
   txt <- entries$path[grepl("\\.txt$", entries$path, ignore.case = TRUE)]
   if (length(txt) == 0L) cli::cli_abort("No {.file .txt} entry inside {.file {basename(path)}}.")
 
-  # Header: normalised names, BOM removed.
+  # Header: normalized names, BOM removed.
   con <- archive::archive_read(path, file = txt[[1]])
   header <- readLines(con, n = 1L, encoding = "UTF-8", warn = FALSE)
   close(con)
-  nms <- .normalise_names(strsplit(header, ";", fixed = TRUE)[[1]])
+  nms <- .normalize_names(strsplit(header, ";", fixed = TRUE)[[1]])
   if (!"uf" %in% nms) cli::cli_abort("Unexpected layout: no {.field uf} column in {.file {basename(path)}}.")
 
   if (!is.null(columns)) {

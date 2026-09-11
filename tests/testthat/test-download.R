@@ -4,10 +4,10 @@ sample_path <- function(kind) {
 
 # Pretend to download: copy the sample archive of the same kind, or report
 # the file as missing / failing, without touching the network.
-fake_download <- function(behaviour = c("ok", "not_found", "error")) {
-  behaviour <- match.arg(behaviour)
+fake_download <- function(behavior = c("ok", "not_found", "error")) {
+  behavior <- match.arg(behavior)
   function(url, destfile, timeout = 900, retries = 3L) {
-    if (behaviour != "ok") return(behaviour)
+    if (behavior != "ok") return(behavior)
     kind <- cagedr:::.detect_file(url)
     file.copy(sample_path(kind), destfile, overwrite = TRUE)
     "ok"

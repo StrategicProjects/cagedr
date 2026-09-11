@@ -1,8 +1,8 @@
-test_that("column names are normalised like the Ministry's layout", {
+test_that("column names are normalized like the Ministry's layout", {
   raw <- c("\ufeffcompet\u00eanciamov", "munic\u00edpio", "se\u00e7\u00e3o",
            "sal\u00e1rio", "unidadesal\u00e1rioc\u00f3digo", "uf")
   expect_equal(
-    cagedr:::.normalise_names(raw),
+    cagedr:::.normalize_names(raw),
     c("competenciamov", "municipio", "secao", "salario", "unidadesalariocodigo", "uf")
   )
 })

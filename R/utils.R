@@ -25,7 +25,7 @@
 
 # -- Periods -------------------------------------------------------------------
 
-#' Validate and normalise reference months given as `AAAAMM` (integer or
+#' Validate and normalize reference months given as `AAAAMM` (integer or
 #' character). Returns an integer vector.
 #' @noRd
 .as_period <- function(x, arg = "period") {
@@ -123,11 +123,11 @@
 
 # -- Column names --------------------------------------------------------------
 
-#' Normalise the MTE column names: strip accents, lower case, keep only
+#' Normalize the MTE column names: strip accents, lower case, keep only
 #' `[a-z0-9]`. `competenciamov` (with accent in the file) stays `competenciamov`, `salario` likewise;
 #' `salario`, and so on. Also removes a leading UTF-8 BOM.
 #' @noRd
-.normalise_names <- function(x) {
+.normalize_names <- function(x) {
   x <- sub("^\ufeff", "", x)
   x <- stringi::stri_trans_general(x, "Latin-ASCII")
   x <- tolower(x)

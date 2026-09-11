@@ -1,7 +1,7 @@
 sample_mov <- function() system.file("extdata", "CAGEDMOV202301_sample.7z", package = "cagedr")
 sample_exc <- function() system.file("extdata", "CAGEDEXC202301_sample.7z", package = "cagedr")
 
-test_that("a sample archive is read with normalised names and types", {
+test_that("a sample archive is read with normalized names and types", {
   x <- caged_read(sample_mov(), verbose = FALSE)
   expect_s3_class(x, "tbl_df")
   expect_equal(nrow(x), 32L)

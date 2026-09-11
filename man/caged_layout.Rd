@@ -7,12 +7,12 @@
 caged_layout()
 }
 \value{
-A tibble with columns \code{column} (normalised name), \code{original}
+A tibble with columns \code{column} (normalized name), \code{original}
 (name in the file), \code{type}, \code{files} and \code{description}.
 }
 \description{
 The columns of the monthly files, with the original (accented) name used
-by the Ministry, the normalised name returned by \code{\link[=caged_read]{caged_read()}}, the type
+by the Ministry, the normalized name returned by \code{\link[=caged_read]{caged_read()}}, the type
 assigned when \code{types = TRUE}, the files in which the column appears and a
 short description. The official layout (the "Layout Nao-identificado Novo
 Caged Movimentacao" spreadsheet) is published in the same FTP folder as the data.
