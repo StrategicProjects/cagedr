@@ -37,5 +37,5 @@ Stream-read the national archives, filtering by state.
   : Record layout of the Novo CAGED microdata
 - [`cagedr`](https://strategicprojects.github.io/cagedr/reference/cagedr-package.md)
   [`cagedr-package`](https://strategicprojects.github.io/cagedr/reference/cagedr-package.md)
-  : cagedr: Access 'Novo CAGED' Microdata from the Brazilian Ministry of
+  : cagedr: Access Novo CAGED Microdata from the Brazilian Ministry of
   Labour

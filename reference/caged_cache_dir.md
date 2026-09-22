@@ -41,9 +41,14 @@ for repeated work.
 
 ``` r
 caged_cache_dir()
-#> [1] "/tmp/RtmprUHn4y/cagedr-cache"
-if (FALSE) { # \dontrun{
-# Persistent cache for every session:
-Sys.setenv(CAGEDR_CACHE_DIR = "~/dados/caged")
-} # }
+#> [1] "/tmp/Rtmp1KvbCB/cagedr-cache"
+
+# For a persistent cache, set the environment variable (for instance in
+# your .Renviron). Here a temporary folder is used and the previous value
+# is restored afterwards.
+old <- Sys.getenv("CAGEDR_CACHE_DIR", unset = NA)
+Sys.setenv(CAGEDR_CACHE_DIR = file.path(tempdir(), "caged-cache"))
+caged_cache_dir()
+#> [1] "/tmp/Rtmp1KvbCB/caged-cache"
+if (is.na(old)) Sys.unsetenv("CAGEDR_CACHE_DIR") else Sys.setenv(CAGEDR_CACHE_DIR = old)
 ```

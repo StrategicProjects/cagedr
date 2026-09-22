@@ -22,12 +22,12 @@ Source:
 [`DESCRIPTION`](https://github.com/StrategicProjects/cagedr/blob/main/DESCRIPTION)
 
 Leite A, Wasiliew M, Vasconcelos H, Amorim C, Bezerra D, Nascimento
-Barreto J (2026). *cagedr: Access 'Novo CAGED' Microdata from the
+Barreto J (2026). *cagedr: Access Novo CAGED Microdata from the
 Brazilian Ministry of Labour*. R package version 0.1.0,
 <https://github.com/StrategicProjects/cagedr>.
 
     @Manual{,
-      title = {cagedr: Access 'Novo CAGED' Microdata from the Brazilian Ministry of Labour},
+      title = {cagedr: Access Novo CAGED Microdata from the Brazilian Ministry of Labour},
       author = {Andre Leite and Marcos Wasiliew and Hugo Vasconcelos and Carlos Amorim and Diogo Bezerra and Júlia {Nascimento Barreto}},
       year = {2026},
       note = {R package version 0.1.0},
