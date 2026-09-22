@@ -1,3 +1,14 @@
+## Resubmission
+
+This is a resubmission. Following the CRAN review (Leonore Hochhauser):
+
+* Removed the single quotes around 'Novo CAGED', 'PDET' and '7z' in the Title
+  and Description fields; they are not package, software or API names.
+* Replaced the only `\dontrun{}` example (in `?caged_cache_dir`) with an
+  executable example that uses a folder under `tempdir()` and restores the
+  environment variable afterwards. The remaining `\donttest{}` examples
+  require network access to the PDET/MTE FTP server.
+
 ## Initial submission
 
 This is the first submission of cagedr to CRAN.
